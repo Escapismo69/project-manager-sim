@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://ciautqikan3tu"]
+[gd_scene load_steps=3 format=3 uid="uid://ciautqikan3tu"]
 
 [ext_resource type="Script" uid="uid://b4yem1oeoncra" path="res://Scripts/project_window.gd" id="1_td4cr"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_td4cr"]
 
 [node name="ProjectWindow" type="Control"]
 layout_mode = 3
@@ -78,6 +80,16 @@ offset_top = 60.5
 offset_right = 756.5
 offset_bottom = 91.5
 text = "+"
+
+[node name="CloseButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 811.5
+offset_top = 3.5
+offset_right = 844.5
+offset_bottom = 38.0
+theme_override_colors/icon_hover_color = Color(1, 0.078431375, 0.05490196, 1)
+theme_override_styles/normal = SubResource("StyleBoxLine_td4cr")
+text = "X"
 
 [connection signal="pressed" from="Panel/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="Panel/AssignQA_Btn" to="." method="_on_assign_qa_btn_pressed"]

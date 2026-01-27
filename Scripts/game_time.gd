@@ -21,6 +21,7 @@ func _process(delta):
 	# Прибавляем реальное время к аккумулятору
 	time_accumulator += delta * MINUTES_PER_REAL_SECOND
 	
+		
 	# Если накопала целая минута
 	if time_accumulator >= 1.0:
 		minute += 1
@@ -35,6 +36,7 @@ func _process(delta):
 				hour = 0
 				day += 1
 				emit_signal("day_started", day)
+				GameState.pay_daily_salaries()
 		
 		# Сообщаем всем, сколько сейчас времени
 		emit_signal("time_tick", hour, minute)

@@ -19,6 +19,8 @@ var is_running = false
 @onready var assign_dev_btn = $Panel/AssignDev_Btn
 @onready var assign_qa_btn = $Panel/AssignQA_Btn
 
+@onready var close_btn = $Panel/CloseButton
+
 # --- НАСТРОЙКА (ВЫЗЫВАЕТСЯ ИЗ СТОЛА) ---
 # Обрати внимание: теперь тут два аргумента
 func setup(data: ProjectData, selector_node):
@@ -44,6 +46,12 @@ func setup(data: ProjectData, selector_node):
 		
 	# Обновляем текст на кнопках (вдруг там уже кто-то назначен)
 	update_buttons()
+
+
+
+func _ready():
+	# Подключаем нажатие кнопки к функции закрытия
+	close_btn.pressed.connect(_on_close_button_pressed)
 
 # --- ВИЗУАЛ ---
 func _process(delta):
@@ -136,6 +144,11 @@ func _physics_process(delta):
 					project.current_stage = project.Stage.FINISHED
 					is_running = false
 					print("ПРОЕКТ ГОТОВ!")
+					GameState.change_balance(project.budget)
 			else:
 				print("Ждем назначения тестировщика...")
 				is_running = false
+				
+func _on_close_button_pressed():
+	visible = false # Просто прячем окно
+	# is_running = false # (Опционально) Если хочешь, чтобы работа вставала на паузу, когда окно закрыто. Если не раскомментируешь — работа пойдет в фоне.
