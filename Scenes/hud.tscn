@@ -59,4 +59,13 @@ visible = false
 [node name="ProjectSelectionUI" parent="." instance=ExtResource("4_6fbih")]
 visible = false
 
+[node name="BalanceLabel" type="Label" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "10000 $"
+
 [connection signal="pressed" from="Panel/VBoxContainer/Button" to="." method="_on_close_button_pressed"]

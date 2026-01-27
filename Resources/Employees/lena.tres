@@ -6,6 +6,6 @@
 script = ExtResource("1_lnsl7")
 employee_name = "Елена"
 job_title = "Backend Junior"
-salary_per_day = 200
+monthly_salary = 2000
 skill_backend = 20
 metadata/_custom_type_script = "uid://ccsypgdq6xdni"

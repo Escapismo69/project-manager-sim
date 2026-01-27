@@ -12,6 +12,7 @@ extends CanvasLayer
 @onready var selection_ui = $ProjectSelectionUI
 @onready var project_window = $ProjectWindow
 @onready var employee_selector = $EmployeeSelector
+@onready var balance_label = $BalanceLabel
 
 # --- СОСТОЯНИЕ ---
 var active_project: ProjectData = null
@@ -29,6 +30,13 @@ func _ready():
 	# Если мы что-то выбрали в меню босса -> запоминаем это
 	if not selection_ui.project_selected.is_connected(_on_project_taken):
 		selection_ui.project_selected.connect(_on_project_taken)
+	
+	
+	# Показываем баланс сразу при старте
+	update_balance_ui(GameState.company_balance)
+	
+	# Подписываемся на изменения баланса
+	GameState.balance_changed.connect(update_balance_ui)
 
 # --- ЧАСЫ ---
 func update_time_label(hour, minute):
@@ -40,7 +48,7 @@ func update_time_label(hour, minute):
 func show_employee_card(data: EmployeeData):
 	name_label.text = "Имя: " + data.employee_name
 	role_label.text = "Должность: " + data.job_title
-	salary_label.text = "Ставка: " + str(data.salary_per_day) + "$/день"
+	salary_label.text = "Ставка: " + str(data.monthly_salary) + "$/месяц"
 	
 	info_panel.visible = true
 
@@ -72,6 +80,6 @@ func _on_project_taken(proj_data):
 	# Меню выбора закроется само (внутри своего скрипта), но можно продублировать:
 	selection_ui.visible = false
 
-
-func _on_closee_button_pressed():
-	pass # Replace with function body.
+# Функция отрисовки денег
+func update_balance_ui(amount):
+	balance_label.text = str(amount) + " $"

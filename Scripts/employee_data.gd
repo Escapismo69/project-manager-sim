@@ -4,7 +4,11 @@ class_name EmployeeData
 # @export позволяет редактировать эти поля прямо в Инспекторе
 @export var employee_name: String = "Новичок"
 @export var job_title: String = "Junior Developer"
-@export var salary_per_day: int = 50
+@export var monthly_salary: int = 3000
+
+var daily_salary: int:
+	get:
+		return monthly_salary / 30
 
 # Навыки (от 0 до 100)
 @export var skill_backend: int = 10
