@@ -1,0 +1,85 @@
+[gd_scene load_steps=2 format=3 uid="uid://ciautqikan3tu"]
+
+[ext_resource type="Script" uid="uid://b4yem1oeoncra" path="res://Scripts/project_window.gd" id="1_td4cr"]
+
+[node name="ProjectWindow" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_td4cr")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -424.5
+offset_top = -284.5
+offset_right = 424.5
+offset_bottom = 284.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+offset_right = 600.0
+offset_bottom = 461.0
+
+[node name="TitleLabel" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="BA_Bar" type="ProgressBar" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Dev_Bar" type="ProgressBar" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="QA_Bar" type="ProgressBar" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Начать проект
+"
+
+[node name="AssignQA_Btn" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 649.5
+offset_top = 94.5
+offset_right = 777.5
+offset_bottom = 125.5
+text = "+"
+
+[node name="AssignBA_Btn" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 647.5
+offset_top = 23.5
+offset_right = 767.5
+offset_bottom = 54.5
+text = "+"
+
+[node name="AssignDev_Btn" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 649.5
+offset_top = 60.5
+offset_right = 756.5
+offset_bottom = 91.5
+text = "+"
+
+[connection signal="pressed" from="Panel/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Panel/AssignQA_Btn" to="." method="_on_assign_qa_btn_pressed"]
+[connection signal="pressed" from="Panel/AssignBA_Btn" to="." method="_on_assign_ba_btn_pressed"]
+[connection signal="pressed" from="Panel/AssignDev_Btn" to="." method="_on_assign_dev_btn_pressed"]

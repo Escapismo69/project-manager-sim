@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cflkasxjj8bho"]
+
+[ext_resource type="Script" uid="uid://dxspg3isan3ai" path="res://Scripts/employee.gd" id="1_6uwtv"]
+[ext_resource type="Texture2D" uid="uid://cigk5mudc8s7r" path="res://icon.svg" id="1_ftex2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6uwtv"]
+size = Vector2(127, 131)
+
+[node name="Employee" type="CharacterBody2D" groups=["npc"]]
+script = ExtResource("1_6uwtv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(64, 65)
+texture = ExtResource("1_ftex2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(65.5, 64.5)
+shape = SubResource("RectangleShape2D_6uwtv")
