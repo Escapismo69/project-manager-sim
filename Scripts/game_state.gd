@@ -37,3 +37,13 @@ func pay_daily_salaries():
 		print("Всего выплачено за день: ", total_daily_cost, "$")
 	else:
 		print("Некому платить зарплату. Бюджет цел.")
+func _ready():
+	# --- ВРЕМЕННЫЙ ТЕСТ ГЕНЕРАТОРА ---
+	var generator = load("res://Scripts/candidate_generator.gd").new()
+	var test_human = generator.generate_random_candidate()
+	
+	print("--- ТЕСТ ГЕНЕРАТОРА ---")
+	print("Имя: ", test_human.employee_name)
+	print("Роль: ", test_human.job_title)
+	print("Зарплата: ", test_human.monthly_salary)
+	print("-----------------------")

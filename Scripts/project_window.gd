@@ -111,7 +111,7 @@ func _physics_process(delta):
 		# ЭТАП 1: БИЗНЕС АНАЛИЗ
 		project.Stage.BA:
 			if project.assignee_ba:
-				var speed = project.assignee_ba.skill_management * delta
+				var speed = project.assignee_ba.skill_business_analysis * delta
 				project.ba_progress += speed
 				if project.ba_progress >= project.ba_needed:
 					project.ba_progress = project.ba_needed
@@ -137,7 +137,7 @@ func _physics_process(delta):
 		# ЭТАП 3: ТЕСТИРОВАНИЕ
 		project.Stage.QA:
 			if project.assignee_qa:
-				var speed = project.assignee_qa.skill_frontend * delta
+				var speed = project.assignee_qa.skill_qa * delta
 				project.qa_progress += speed
 				if project.qa_progress >= project.qa_needed:
 					project.qa_progress = project.qa_needed

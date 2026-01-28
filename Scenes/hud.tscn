@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://l6ojv8bflski"]
+[gd_scene load_steps=6 format=3 uid="uid://l6ojv8bflski"]
 
 [ext_resource type="Script" uid="uid://ds4gl2e7xqwwc" path="res://Scripts/hud.gd" id="1_e0onf"]
 [ext_resource type="PackedScene" uid="uid://ciautqikan3tu" path="res://Scenes/project_window.tscn" id="2_fccik"]
+[ext_resource type="PackedScene" uid="uid://cm0p2pu0821ay" path="res://Scenes/HiringMenu.tscn" id="2_t1xeu"]
 [ext_resource type="PackedScene" uid="uid://ydl7ldgl5qyc" path="res://Scenes/employee_selector.tscn" id="3_bjfho"]
 [ext_resource type="PackedScene" uid="uid://dum7oe0xx61nt" path="res://Scenes/ProjectSelectionUI.tscn" id="4_6fbih"]
 
@@ -67,5 +68,8 @@ offset_left = -40.0
 offset_bottom = 23.0
 grow_horizontal = 0
 text = "10000 $"
+
+[node name="HiringMenu" parent="." instance=ExtResource("2_t1xeu")]
+visible = false
 
 [connection signal="pressed" from="Panel/VBoxContainer/Button" to="." method="_on_close_button_pressed"]

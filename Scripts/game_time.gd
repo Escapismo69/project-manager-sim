@@ -6,7 +6,7 @@ signal day_started(day_number)
 signal day_ended
 
 # Настройки времени
-const MINUTES_PER_REAL_SECOND = 10 # 1 реальная сек = 10 игровых минут (день пройдет за ~2.5 мин)
+const MINUTES_PER_REAL_SECOND = 60 # 1 реальная сек = 10 игровых минут (день пройдет за ~2.5 мин)
 const START_HOUR = 8 # Начало рабочего дня
 const END_HOUR = 18 # Конец рабочего дня
 

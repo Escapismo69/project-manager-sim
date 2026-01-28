@@ -12,8 +12,8 @@ var daily_salary: int:
 
 # Навыки (от 0 до 100)
 @export var skill_backend: int = 10
-@export var skill_frontend: int = 5
-@export var skill_management: int = 0
+@export var skill_qa: int = 5
+@export var skill_business_analysis: int = 0
 
 # Сюда можно добавить иконку лица (аватарку)
 @export var avatar: Texture2D
