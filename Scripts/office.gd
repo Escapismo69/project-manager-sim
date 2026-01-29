@@ -28,4 +28,3 @@ func spawn_new_employee(data: EmployeeData):
 	new_npc.global_position = spawn_point.global_position + random_offset
 	
 	print("Заспавнен сотрудник: ", data.employee_name)
-	

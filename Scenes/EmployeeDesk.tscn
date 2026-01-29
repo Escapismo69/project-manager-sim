@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://800ken273kfj"]
+
+[ext_resource type="Texture2D" uid="uid://ss4fol6h8ig2" path="res://Sprites/table_employee.png" id="1_5d7py"]
+[ext_resource type="Script" uid="uid://buoyrfwm72weh" path="res://Scripts/employee_desk.gd" id="1_68q08"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_68q08"]
+size = Vector2(114, 56)
+
+[sub_resource type="LabelSettings" id="LabelSettings_eoxvh"]
+font_size = 12
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="EmployeeDesk" type="StaticBody2D" groups=["desk"]]
+script = ExtResource("1_68q08")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_5d7py")
+offset = Vector2(0, -25)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -24)
+shape = SubResource("RectangleShape2D_68q08")
+
+[node name="SeatPosition" type="Marker2D" parent="."]
+position = Vector2(0, -11)
+
+[node name="NameTag" type="Label" parent="."]
+offset_left = -38.0
+offset_top = -18.0
+offset_right = 42.0
+offset_bottom = 5.0
+text = "Свободно"
+label_settings = SubResource("LabelSettings_eoxvh")
+horizontal_alignment = 1

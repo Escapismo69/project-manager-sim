@@ -1,13 +1,11 @@
-[gd_scene load_steps=13 format=4 uid="uid://kr52uj1nuu18"]
+[gd_scene load_steps=11 format=4 uid="uid://kr52uj1nuu18"]
 
 [ext_resource type="Script" uid="uid://8l1llj5ucpfe" path="res://Scripts/office.gd" id="1_2vylc"]
 [ext_resource type="Texture2D" uid="uid://0nlcxe4m5eup" path="res://Room_Builder_free_48x48.png" id="1_llmbb"]
 [ext_resource type="PackedScene" uid="uid://cebrvtrf38laf" path="res://Scenes/player.tscn" id="2_vggx3"]
-[ext_resource type="PackedScene" uid="uid://cflkasxjj8bho" path="res://Scenes/employee.tscn" id="3_vggx3"]
-[ext_resource type="Resource" uid="uid://dup2eca1wy13t" path="res://Resources/Employees/vasya.tres" id="4_2jlrf"]
-[ext_resource type="Resource" uid="uid://dus1xsbnbrrgc" path="res://Resources/Employees/lena.tres" id="5_7xo7e"]
 [ext_resource type="PackedScene" uid="uid://l6ojv8bflski" path="res://Scenes/hud.tscn" id="6_7xo7e"]
 [ext_resource type="PackedScene" uid="uid://cmjsjpufedl22" path="res://Scenes/ComputerDesk.tscn" id="7_eqlnk"]
+[ext_resource type="PackedScene" uid="uid://800ken273kfj" path="res://Scenes/EmployeeDesk.tscn" id="8_2vylc"]
 [ext_resource type="PackedScene" uid="uid://bwgwnl47ai4v6" path="res://Scenes/BossDesk.tscn" id="8_o84nh"]
 [ext_resource type="PackedScene" uid="uid://rn7ywspbl6ht" path="res://Scenes/hr_desk.tscn" id="10_4luf0"]
 
@@ -279,33 +277,39 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_cumm5")
 
 [node name="Office" type="Node2D"]
+z_as_relative = false
 script = ExtResource("1_2vylc")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
+z_index = -10
 tile_map_data = PackedByteArray("AAAAAAAAAAAOAAUAAAABAAAAAAAPAAUAAAACAAAAAAAPAAUAAAADAAAAAAAPAAUAAAAEAAAAAAAPAAUAAAAFAAAAAAAPAAUAAAAGAAAAAAAPAAUAAAAHAAAAAAAPAAUAAAAIAAAAAAAPAAUAAAAJAAAAAAAPAAUAAAAKAAAAAAAPAAUAAAALAAAAAAAPAAUAAAAMAAAAAAAPAAUAAAANAAAAAAAPAAYAAAANAAEAAAAPAAYAAAANAAIAAAAPAAYAAAANAAMAAAAPAAYAAAANAAQAAAAPAAYAAAANAAUAAAAPAAYAAAANAAYAAAAPAAYAAAANAAcAAAAPAAYAAAAMAAcAAAAPAAYAAAALAAcAAAAPAAYAAAALAAYAAAAPAAYAAAAKAAYAAAAPAAYAAAAJAAYAAAAPAAYAAAAIAAYAAAAPAAYAAAAHAAYAAAAPAAYAAAAGAAYAAAAPAAYAAAAFAAYAAAAPAAYAAAAEAAYAAAAPAAYAAAADAAYAAAAPAAYAAAACAAcAAAAPAAYAAAABAAcAAAAPAAYAAAAAAAcAAAAOAAYAAAADAAcAAAAPAAYAAAAEAAcAAAAPAAYAAAAFAAcAAAAPAAYAAAAGAAcAAAAPAAYAAAAHAAcAAAAPAAYAAAAIAAcAAAAPAAYAAAAJAAcAAAAPAAYAAAAKAAcAAAAPAAYAAAAAAAYAAAAOAAYAAAAAAAUAAAAOAAYAAAAAAAQAAAAOAAYAAAAAAAMAAAAOAAYAAAAAAAIAAAAOAAYAAAAAAAEAAAAOAAYAAAABAAEAAAAPAAYAAAABAAIAAAAPAAYAAAABAAMAAAAPAAYAAAABAAQAAAAPAAYAAAABAAUAAAAPAAYAAAABAAYAAAAPAAYAAAACAAMAAAAPAAYAAAACAAIAAAAPAAYAAAACAAEAAAAPAAYAAAACAAQAAAAPAAYAAAACAAUAAAAPAAYAAAADAAEAAAAPAAYAAAADAAIAAAAPAAYAAAADAAMAAAAPAAYAAAADAAQAAAAPAAYAAAADAAUAAAAPAAYAAAACAAYAAAAPAAYAAAAEAAMAAAAPAAYAAAAEAAIAAAAPAAYAAAAEAAEAAAAPAAYAAAAEAAQAAAAPAAYAAAAEAAUAAAAPAAYAAAAFAAUAAAAPAAYAAAAFAAQAAAAPAAYAAAAFAAMAAAAPAAYAAAAFAAIAAAAPAAYAAAAFAAEAAAAPAAYAAAAGAAIAAAAPAAYAAAAGAAMAAAAPAAYAAAAGAAUAAAAPAAYAAAAGAAQAAAAPAAYAAAAHAAEAAAAPAAYAAAAHAAIAAAAPAAYAAAAHAAMAAAAPAAYAAAAGAAEAAAAPAAYAAAAIAAIAAAAPAAYAAAAIAAEAAAAPAAYAAAAIAAMAAAAPAAYAAAAHAAQAAAAPAAYAAAAHAAUAAAAPAAYAAAAIAAQAAAAPAAYAAAAJAAEAAAAPAAYAAAAJAAIAAAAPAAYAAAAJAAMAAAAPAAYAAAAIAAUAAAAPAAYAAAAKAAIAAAAPAAYAAAAKAAMAAAAPAAYAAAAKAAQAAAAPAAYAAAAKAAUAAAAPAAYAAAAJAAUAAAAPAAYAAAAJAAQAAAAPAAYAAAAKAAEAAAAPAAYAAAALAAIAAAAPAAYAAAALAAEAAAAPAAYAAAAMAAEAAAAPAAYAAAAMAAIAAAAPAAYAAAAMAAMAAAAPAAYAAAALAAQAAAAPAAYAAAALAAUAAAAPAAYAAAALAAMAAAAPAAYAAAAMAAUAAAAPAAYAAAAMAAQAAAAPAAYAAAAMAAYAAAAPAAYAAAABAP//AAAIABQAAAACAP//AAAIABQAAAADAP//AAAIABQAAAAEAP//AAAIABQAAAAFAP//AAAIABQAAAAGAP//AAAIABQAAAAHAP//AAAIABQAAAAIAP//AAAIABQAAAAJAP//AAAIABQAAAAKAP//AAAIABQAAAALAP//AAAIABQAAAAMAP//AAAIABQAAAANAP//AAAJABQAAAAAAP//AAAHABQAAAAAAP7/AAAHABMAAAABAP7/AAAIABMAAAACAP7/AAAIABMAAAADAP7/AAAIABMAAAAEAP7/AAAIABMAAAAFAP7/AAAIABMAAAAGAP7/AAAIABMAAAAHAP7/AAAIABMAAAAIAP7/AAAIABMAAAAJAP7/AAAIABMAAAAKAP7/AAAIABMAAAALAP7/AAAIABMAAAAMAP7/AAAIABMAAAANAP7/AAAJABMAAAD//wcAAAALAAIAAAD//wYAAAALAAIAAAD//wUAAAALAAIAAAD//wQAAAALAAIAAAD//wMAAAALAAIAAAD//wIAAAALAAIAAAD//wEAAAALAAIAAAD//wAAAAALAAIAAAD/////AAALAAIAAAD///7/AAALAAIAAAD//wgAAAALAAIAAAA=")
 tile_set = SubResource("TileSet_2jlrf")
 
 [node name="Player" parent="." groups=["NPC"] instance=ExtResource("2_vggx3")]
 position = Vector2(120, 98)
 
-[node name="Employee" parent="." instance=ExtResource("3_vggx3")]
-position = Vector2(46, 537)
-data = ExtResource("4_2jlrf")
-
-[node name="Employee2" parent="." instance=ExtResource("3_vggx3")]
-position = Vector2(928, 159)
-data = ExtResource("5_7xo7e")
-
 [node name="HUD" parent="." instance=ExtResource("6_7xo7e")]
 
 [node name="ComputerDesk" parent="." instance=ExtResource("7_eqlnk")]
-position = Vector2(268, 33)
+position = Vector2(313, 34)
 
 [node name="BossDesk" parent="." instance=ExtResource("8_o84nh")]
-position = Vector2(365, 347)
+position = Vector2(630, 35)
 
 [node name="SpawnPoint" type="Marker2D" parent="."]
 position = Vector2(1099, 818)
 
 [node name="HrDesk" parent="." instance=ExtResource("10_4luf0")]
-position = Vector2(414, 589)
+position = Vector2(933, 1)
+
+[node name="EmployeeDesk" parent="." instance=ExtResource("8_2vylc")]
+position = Vector2(308, 292)
+
+[node name="EmployeeDesk2" parent="." instance=ExtResource("8_2vylc")]
+position = Vector2(584, 294)
+
+[node name="EmployeeDesk4" parent="." instance=ExtResource("8_2vylc")]
+position = Vector2(587, 504)
+
+[node name="EmployeeDesk3" parent="." instance=ExtResource("8_2vylc")]
+position = Vector2(304, 507)
