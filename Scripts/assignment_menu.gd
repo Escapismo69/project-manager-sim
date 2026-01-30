@@ -56,19 +56,15 @@ func create_button_for(npc_node):
 	
 	container.add_child(btn)
 
-# Когда нажали на имя в списке
 func _on_employee_selected(npc_node):
 	if target_desk:
-		# 1. Говорим столу: "Забирай данные этого парня"
+		# 1. Привязываем данные к столу
 		target_desk.assign_employee(npc_node.data)
 		
-		# 2. ТЕЛЕПОРТАЦИЯ (Самое важное!)
-		# Перемещаем спрайт сотрудника в точку стула
-		# Используем global_position для точности
-		npc_node.global_position = target_desk.seat_point.global_position
-		npc_node.z_index = -1
-		npc_node.set_physics_process(false)
-		print("Сотрудник пересажен!")
+		# 2. ДАЕМ КОМАНДУ ИДТИ (Вместо телепорта)
+		# Мы передаем глобальные координаты точки стула
+		npc_node.move_to_desk(target_desk.seat_point.global_position)
 		
-	# Закрываем меню
+		print("Сотрудник получил приказ идти к столу!")
+		
 	visible = false

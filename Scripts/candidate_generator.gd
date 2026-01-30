@@ -18,7 +18,7 @@ func generate_random_candidate() -> EmployeeData:
 	new_emp.skill_qa = 0.0
 	
 	# 3. Выдаем навык ТОЛЬКО по специальности
-	var primary_skill_value = randf_range(1.5, 4.0) # От 1.5 до 4.0
+	var primary_skill_value = randf_range(100, 200) # От 1.5 до 4.0
 	
 	match role:
 		"Business Analyst":
