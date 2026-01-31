@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxxfvbsbhm1oh"]
+
+[ext_resource type="Script" uid="uid://d3jso6fbnv5xy" path="res://Scripts/project_track.gd" id="1_5y7e1"]
+
+[node name="ProjectTrack" type="Control"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 3
+anchors_preset = 0
+offset_bottom = 50.0
+script = ExtResource("1_5y7e1")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1156.0
+offset_bottom = 93.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 2.0
+offset_right = 1148.0
+offset_bottom = 90.0
+
+[node name="InfoPanel" type="Panel" parent="HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="StageNameLabel" type="Label" parent="HBoxContainer/InfoPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Business Analysis"
+
+[node name="AssignButton" type="Button" parent="HBoxContainer/InfoPanel"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 25.0
+offset_right = 120.0
+offset_bottom = 56.0
+text = "Назначить"
+
+[node name="GanttArea" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="VisualBar" type="ColorRect" parent="HBoxContainer/GanttArea"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 0, 1, 1)
+
+[node name="ProgressBar" type="ColorRect" parent="HBoxContainer/GanttArea/VisualBar"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+color = Color(0, 0.5372549, 0, 1)

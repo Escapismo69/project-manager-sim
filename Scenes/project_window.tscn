@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://ciautqikan3tu"]
+[gd_scene load_steps=4 format=3 uid="uid://ciautqikan3tu"]
 
 [ext_resource type="Script" uid="uid://b4yem1oeoncra" path="res://Scripts/project_window.gd" id="1_td4cr"]
+[ext_resource type="PackedScene" uid="uid://cxxfvbsbhm1oh" path="res://Scenes/ProjectTrack.tscn" id="2_ib778"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_td4cr"]
 
@@ -20,6 +21,7 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_td4cr")
+track_scene = ExtResource("2_ib778")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -28,70 +30,82 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -424.5
-offset_top = -284.5
-offset_right = 424.5
-offset_bottom = 284.5
+offset_left = -573.0
+offset_top = -321.0
+offset_right = 576.0
+offset_bottom = 324.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 layout_mode = 1
-offset_right = 600.0
-offset_bottom = 461.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -553.5
+offset_top = -303.5
+offset_right = 528.5
+offset_bottom = 291.5
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="TitleLabel" type="Label" parent="Panel/VBoxContainer"]
+[node name="HeaderInfo" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
 
-[node name="BA_Bar" type="ProgressBar" parent="Panel/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="Panel/VBoxContainer/HeaderInfo"]
+layout_mode = 2
+text = "Заголовок"
+
+[node name="DeadlineLabel" type="Label" parent="Panel/VBoxContainer/HeaderInfo"]
+layout_mode = 2
+text = "Дедлайн: День 5\""
+
+[node name="BudgetLabel" type="Label" parent="Panel/VBoxContainer/HeaderInfo"]
+layout_mode = 2
+text = "Бюджет: $5000"
+
+[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer"]
 layout_mode = 2
 
-[node name="Dev_Bar" type="ProgressBar" parent="Panel/VBoxContainer"]
+[node name="TimelineHeader" type="Control" parent="Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="QA_Bar" type="ProgressBar" parent="Panel/VBoxContainer"]
+[node name="TracksContainer" type="VBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/VBoxContainer"]
 layout_mode = 2
 
-[node name="StartButton" type="Button" parent="Panel/VBoxContainer"]
+[node name="Footer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
-text = "Начать проект
-"
 
-[node name="AssignQA_Btn" type="Button" parent="Panel"]
-layout_mode = 0
-offset_left = 649.5
-offset_top = 94.5
-offset_right = 777.5
-offset_bottom = 125.5
-text = "+"
+[node name="CostLabel" type="Label" parent="Panel/VBoxContainer/Footer"]
+layout_mode = 2
+text = "Расходы: $0"
 
-[node name="AssignBA_Btn" type="Button" parent="Panel"]
-layout_mode = 0
-offset_left = 647.5
-offset_top = 23.5
-offset_right = 767.5
-offset_bottom = 54.5
-text = "+"
+[node name="ProfitLabel" type="Label" parent="Panel/VBoxContainer/Footer"]
+layout_mode = 2
+text = "Прибыль: $5000"
 
-[node name="AssignDev_Btn" type="Button" parent="Panel"]
-layout_mode = 0
-offset_left = 649.5
-offset_top = 60.5
-offset_right = 756.5
-offset_bottom = 91.5
-text = "+"
+[node name="StartButton" type="Button" parent="Panel/VBoxContainer/Footer"]
+layout_mode = 2
+text = "Начать проект"
 
-[node name="CloseButton" type="Button" parent="Panel"]
-layout_mode = 0
-offset_left = 811.5
-offset_top = 3.5
-offset_right = 844.5
-offset_bottom = 38.0
-theme_override_colors/icon_hover_color = Color(1, 0.078431375, 0.05490196, 1)
+[node name="CancelButton" type="Button" parent="Panel/VBoxContainer/Footer"]
+layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxLine_td4cr")
-text = "X"
+text = "Отказаться"
 
-[connection signal="pressed" from="Panel/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="Panel/AssignQA_Btn" to="." method="_on_assign_qa_btn_pressed"]
-[connection signal="pressed" from="Panel/AssignBA_Btn" to="." method="_on_assign_ba_btn_pressed"]
-[connection signal="pressed" from="Panel/AssignDev_Btn" to="." method="_on_assign_dev_btn_pressed"]
+[node name="CloseWindowButton" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -18.0
+offset_bottom = 31.0
+grow_horizontal = 0
+text = " Х "

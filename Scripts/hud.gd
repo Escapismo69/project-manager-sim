@@ -58,8 +58,9 @@ func _on_close_button_pressed():
 
 # --- ЛОГИКА 2: СТОЛ БОССА ---
 func open_boss_menu():
-	if active_project and active_project.current_stage != ProjectData.Stage.FINISHED:
-		print("Босс: Сначала закончи текущий проект!")
+	# Проверяем: если проект есть И он не завершен и не провален
+	if active_project and active_project.state != ProjectData.State.FINISHED and active_project.state != ProjectData.State.FAILED:
+		print("Босс: Сначала закончи (или сдай) текущий проект!")
 		return
 	
 	selection_ui.open_selection()

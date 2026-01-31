@@ -22,15 +22,35 @@ func open_selection():
 	
 	for i in range(3):
 		# 1. Генерируем проект
-		var proj = ProjectGenerator.generate_random_project()
+		# ИСПРАВЛЕНИЕ: Передаем текущий день из GameTime
+		var proj = ProjectGenerator.generate_random_project(GameTime.day)
 		current_options.append(proj)
 		
 		# 2. Пишем текст на кнопке
 		var text = proj.title + "\n\n"
-		text += "BA: " + str(proj.ba_needed) + "\n"
-		text += "Dev: " + str(proj.dev_needed) + "\n"
-		text += "QA: " + str(proj.qa_needed) + "\n\n"
+		
+		# ИСПРАВЛЕНИЕ: Теперь данные лежат в массиве stages, а не в переменных
+		# Нам нужно достать цифры из массива
+		var ba_amount = 0
+		var dev_amount = 0
+		var qa_amount = 0
+		
+		for stage in proj.stages:
+			match stage.type:
+				"BA": ba_amount = stage.amount
+				"DEV": dev_amount = stage.amount
+				"QA": qa_amount = stage.amount
+		
+		text += "BA: " + str(ba_amount) + "\n"
+		text += "Dev: " + str(dev_amount) + "\n"
+		text += "QA: " + str(qa_amount) + "\n"
+		text += "\n"
+		
+		# Добавляем инфо о дедлайне
+		var days_to_finish = proj.deadline_day - GameTime.day
+		text += "Срок: " + str(days_to_finish) + " дн.\n"
 		text += "$" + str(proj.budget)
+		
 		cards[i].text = text
 		
 		# 3. Переподключаем нажатие кнопки
