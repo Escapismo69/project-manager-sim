@@ -323,3 +323,6 @@ position = Vector2(506, 359)
 
 [node name="EmployeeDesk3" parent="." instance=ExtResource("8_2vylc")]
 position = Vector2(312, 357)
+
+[node name="OfficeEntrance" type="Marker2D" parent="." groups=["entrance"]]
+position = Vector2(1106, 773)

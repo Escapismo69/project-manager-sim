@@ -17,8 +17,8 @@ func generate_random_candidate() -> EmployeeData:
 	new_emp.skill_backend = 0.0
 	new_emp.skill_qa = 0.0
 	
-	# 3. Выдаем навык ТОЛЬКО по специальности
-	var primary_skill_value = randf_range(100, 200) # От 1.5 до 4.0
+	# 3. Выдаем навык (Диапазон 100 - 200)
+	var primary_skill_value = randi_range(100, 200) 
 	
 	match role:
 		"Business Analyst":
@@ -28,8 +28,19 @@ func generate_random_candidate() -> EmployeeData:
 		"QA Engineer":
 			new_emp.skill_qa = primary_skill_value
 	
-	# 4. Считаем Зарплату (только от профильного навыка)
-	var raw_salary = 500 + (primary_skill_value * 600)
-	new_emp.monthly_salary = round(raw_salary / 100.0) * 100
+	# 4. Считаем Зарплату (FIX)
+	# Формула: База 1000 + (Скилл * 10)
+	# Скилл 100 -> 1000 + 1000 = 2000
+	# Скилл 200 -> 1000 + 2000 = 3000
+	var raw_salary = 1000 + (primary_skill_value * 10)
+	
+	# Добавляем немного рандома (+/- 200 баксов)
+	raw_salary += randi_range(-200, 200)
+	
+	# Округляем до красивых 50 (например 2450)
+	new_emp.monthly_salary = round(raw_salary / 50.0) * 50
+	
+	# При создании даем полную энергию
+	new_emp.current_energy = 100.0
 	
 	return new_emp

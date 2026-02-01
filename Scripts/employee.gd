@@ -4,94 +4,141 @@ extends CharacterBody2D
 enum State {
 	IDLE,       # Стоит (не работает)
 	MOVING,     # Идет к цели (не работает)
-	WORKING     # Сидит за столом (РАБОТАЕТ)
+	WORKING,    # Сидит за столом (РАБОТАЕТ)
+	GOING_HOME, # Идет к выходу (18:00)
+	HOME        # Исчез (дома)
 }
 
 var current_state = State.IDLE
-var movement_target_position: Vector2 = Vector2.ZERO
-var movement_speed = 100.0 # Скорость ходьбы
+var movement_speed = 100.0 
 
-# Данные
+# Настройка потери энергии (10 ед в игровой час)
+const ENERGY_LOSS_PER_GAME_HOUR = 10.0
+
+var my_desk_position: Vector2 = Vector2.ZERO 
+
 @export var data: EmployeeData
 
-# Ссылки
 @onready var body_sprite = $Visuals/Body
 @onready var head_sprite = $Visuals/Body/Head
-@onready var nav_agent = $NavigationAgent2D # Наш GPS
+@onready var nav_agent = $NavigationAgent2D 
 @onready var debug_label = $DebugLabel
+
 func _ready():
 	add_to_group("npc")
 	start_breathing_animation()
 	
-	# Настройка навигатора: отключаем лишнее, чтобы не тормозил
 	nav_agent.path_desired_distance = 4.0
 	nav_agent.target_desired_distance = 4.0
 	
 	if data:
 		update_visuals()
+		# На старте полная энергия
+		data.current_energy = 100.0
+
+	GameTime.work_started.connect(_on_work_started)
+	GameTime.work_ended.connect(_on_work_ended)
+	
+	if GameTime.hour < 9 or GameTime.hour >= 18:
+		_go_to_sleep_instant()
 
 func _physics_process(delta):
-	# Логика зависит от состояния
 	update_debug_label()
+	
 	match current_state:
-		State.IDLE:
-			pass # Просто стоим
+		State.IDLE, State.HOME:
+			pass 
 			
 		State.WORKING:
-			pass # Просто сидим (анимация работы будет тут)
+			# --- [НОВОЕ] ТРАТИМ ЭНЕРГИЮ ---
+			# Формула: (Потеря в час / 60 мин) * (Скорость минут в сек) * delta
+			var loss_speed = (ENERGY_LOSS_PER_GAME_HOUR / 60.0) * GameTime.MINUTES_PER_REAL_SECOND
+			
+			data.current_energy -= loss_speed * delta
+			
+			# Не даем уйти ниже нуля
+			if data.current_energy < 0:
+				data.current_energy = 0
 			
 		State.MOVING:
-			# 1. Считаем реальное расстояние от тела до точки назначения (по прямой)
-			# target_position мы задали в функции move_to_desk
 			var dist = global_position.distance_to(nav_agent.target_position)
-			
-			# 2. ПРОВЕРКА ПРИБЫТИЯ
-			# Если мы подошли ближе чем на 50 пикселей (размер тела работника) - садимся.
-			# Даже если мы уперлись в стол, 50 пикселей должно хватить, чтобы засчитать прибытие.
 			if dist < 100.0:
-				_on_navigation_finished()
+				_on_navigation_finished() 
 				return
+			_move_along_path()
 
-			# 3. Если еще далеко - идем
-			var next_path_position = nav_agent.get_next_path_position()
-			var new_velocity = global_position.direction_to(next_path_position) * movement_speed
-			
-			# Важный фикс: если next_path_position внутри стола,
-			# вектор может сойти с ума. Но move_and_slide справится.
-			velocity = new_velocity
-			move_and_slide()
+		State.GOING_HOME:
+			var dist = global_position.distance_to(nav_agent.target_position)
+			if dist < 50.0:
+				_on_arrived_home() 
+				return
+			_move_along_path()
+
+func _move_along_path():
+	var next_path_position = nav_agent.get_next_path_position()
+	var new_velocity = global_position.direction_to(next_path_position) * movement_speed
+	velocity = new_velocity
+	move_and_slide()
+
 # --- ФУНКЦИИ УПРАВЛЕНИЯ ---
-	
 
-# Команда: "Иди к столу!"
 func move_to_desk(target_point: Vector2):
+	my_desk_position = target_point 
 	current_state = State.MOVING
-	
-	# Возвращаем в нормальный слой (если сидел)
 	z_index = 0 
-	
-	# Задаем цель навигатору
 	nav_agent.target_position = target_point
+	visible = true
+	$CollisionShape2D.disabled = false
 
-# Когда дошел
 func _on_navigation_finished():
-	print("Сотрудник прибыл к столу. Садимся...")
-	
-	# --- САМОЕ ГЛАВНОЕ: ТЕЛЕПОРТАЦИЯ ---
-	# Мы жестко ставим его в ту точку, куда он пытался дойти.
-	# nav_agent.target_position хранит координаты, которые мы задали при старте.
 	global_position = nav_agent.target_position
-	
-	# Меняем состояние
 	current_state = State.WORKING
-	
-	# Прячем ноги за стол
-	z_index = -1
-	
-	# Гасим инерцию
+	z_index = -1 
 	velocity = Vector2.ZERO
 
-# --- ВИЗУАЛ И ПРОЧЕЕ (Оставляем твой код) ---
+# --- ЛОГИКА ДЕНЬ/НОЧЬ ---
+
+func _on_work_started():
+	# [НОВОЕ] Утро! Восстанавливаем силы!
+	if data:
+		data.current_energy = 100.0
+		
+	if my_desk_position == Vector2.ZERO:
+		return 
+
+	var entrance = get_tree().get_first_node_in_group("entrance")
+	if entrance:
+		global_position = entrance.global_position
+	
+	visible = true
+	$CollisionShape2D.disabled = false
+	z_index = 0 
+	
+	current_state = State.MOVING
+	nav_agent.target_position = my_desk_position
+
+func _on_work_ended():
+	z_index = 0 
+	var entrance = get_tree().get_first_node_in_group("entrance")
+	if entrance:
+		nav_agent.target_position = entrance.global_position
+		current_state = State.GOING_HOME
+	else:
+		_on_arrived_home()
+
+func _on_arrived_home():
+	visible = false
+	$CollisionShape2D.disabled = true
+	current_state = State.HOME
+	velocity = Vector2.ZERO
+
+func _go_to_sleep_instant():
+	visible = false
+	$CollisionShape2D.disabled = true
+	current_state = State.HOME
+
+# --- ВИЗУАЛ ---
+
 func start_breathing_animation():
 	if not body_sprite: return
 	var tween = create_tween()
@@ -102,6 +149,8 @@ func start_breathing_animation():
 
 func setup_employee(new_data: EmployeeData):
 	data = new_data
+	# При создании тоже даем 100 энергии
+	data.current_energy = 100.0
 	update_visuals()
 
 func update_visuals():
@@ -119,17 +168,20 @@ func interact():
 	var hud = get_tree().get_first_node_in_group("ui")
 	if hud and data:
 		hud.show_employee_card(data)
+
+# --- [ОБНОВЛЕНО] ОТЛАДКА ---
 func update_debug_label():
-	if debug_label:
-		# State.keys() возвращает массив ["IDLE", "MOVING", "WORKING"]
-		# Мы берем слово по индексу текущего состояния
+	if debug_label and data:
 		var state_name = State.keys()[current_state]
-		debug_label.text = state_name
-		# (Опционально) Меняем цвет текста для наглядности
+		# Показываем Состояние + Энергию + Эффективность
+		var energy_str = "%d%%" % int(data.current_energy)
+		var eff_str = "x%.1f" % data.get_efficiency_multiplier()
+		
+		debug_label.text = "%s\nEn: %s (%s)" % [state_name, energy_str, eff_str]
+		
 		match current_state:
-			State.IDLE:
-				debug_label.modulate = Color.WHITE
-			State.MOVING:
-				debug_label.modulate = Color.YELLOW
-			State.WORKING:
-				debug_label.modulate = Color.GREEN
+			State.IDLE: debug_label.modulate = Color.WHITE
+			State.MOVING: debug_label.modulate = Color.YELLOW
+			State.WORKING: debug_label.modulate = Color.GREEN
+			State.GOING_HOME: debug_label.modulate = Color.ORANGE
+			State.HOME: debug_label.modulate = Color.GRAY
