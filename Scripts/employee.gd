@@ -28,8 +28,8 @@ func _ready():
 	add_to_group("npc")
 	start_breathing_animation()
 	
-	nav_agent.path_desired_distance = 4.0
-	nav_agent.target_desired_distance = 4.0
+	nav_agent.path_desired_distance = 20.0
+	nav_agent.target_desired_distance = 20.0
 	
 	if data:
 		update_visuals()
