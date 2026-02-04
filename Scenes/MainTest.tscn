@@ -1,10 +1,30 @@
 [gd_scene load_steps=3 format=3 uid="uid://c2qtewuhk222x"]
 
-[ext_resource type="Script" uid="uid://cnfnracsn87kn" path="res://Scripts/main_test.gd" id="1_c2270"]
 [ext_resource type="PackedScene" uid="uid://ciautqikan3tu" path="res://Scenes/project_window.tscn" id="2_bhhyf"]
 
+[sub_resource type="GDScript" id="GDScript_fae42"]
+script/source = "extends Node2D
+
+# Загружаем ресурсы (поменяй пути на свои!)
+var test_project = preload(\"res://Resources/Projects/project_test.tres\") 
+var test_employee = preload(\"res://Resources/Employees/vasya.tres\")
+
+@onready var window = $ProjectWindow
+
+func _ready():
+	# 1. Загружаем данные в окно
+	window.setup(test_project)
+	
+	# 2. ЧИТЕРСТВО: Вручную назначаем Васю на ВСЕ этапы сразу
+	test_project.assignee_ba = test_employee
+	test_project.assignee_dev = test_employee
+	test_project.assignee_qa = test_employee
+	
+	# Теперь если нажать кнопку Start в игре, полоски должны поползти
+"
+
 [node name="MainTest" type="Node2D"]
-script = ExtResource("1_c2270")
+script = SubResource("GDScript_fae42")
 
 [node name="ProjectWindow" parent="." instance=ExtResource("2_bhhyf")]
 offset_left = 169.0

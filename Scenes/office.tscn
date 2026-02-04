@@ -26,6 +26,8 @@ size = Vector2(62, 1002.5)
 z_as_relative = false
 script = ExtResource("1_2vylc")
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_o84nh")
 
